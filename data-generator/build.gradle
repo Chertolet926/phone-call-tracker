@@ -1,6 +1,19 @@
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 dependencies {
     implementation project(':common')
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.18'
+
+    implementation "net.datafaker:datafaker:2.5.2"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.postgresql:postgresql'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation('javax.annotation:javax.annotation-api:1.3.2') {
+        exclude module: 'java.annotation' // Исключаем системный модуль
+    }
 }

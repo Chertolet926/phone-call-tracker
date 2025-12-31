@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="phone-call-tracker.data-generator" options="-parameters" />
+      <module name="phone-call-tracker.data-generator.main" options="-parameters" />
+      <module name="phone-call-tracker.data-generator.test" options="-parameters" />
+      <module name="phone-call-tracker.tracker" options="-parameters" />
+      <module name="phone-call-tracker.tracker.main" options="-parameters" />
+      <module name="phone-call-tracker.tracker.test" options="-parameters" />
+    </option>
+  </component>
+</project>

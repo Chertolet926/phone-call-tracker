@@ -1,0 +1,5 @@
+rootProject.name = 'phone-call-tracker'
+
+include 'common'
+include 'tracker'
+include 'data-generator'

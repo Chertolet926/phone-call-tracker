@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6bdcd735-4a47-4f4d-ad2c-ec6ea1f738a5" name="Changes" comment="Базовый проект с несколькими модулями для простого разделения функционала основного приложения от генератора данных, а так же вынесения общих для этих двух сервисов классов в отдельный модуль. Настроены приложения генератора и самого трекера так что бы панель управления генератором открывалась на порту 8081, а основного приложения на 8080. Добавлена базовая функциональность hello world для демонстрации работы модулей." />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Chertolet926"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Chertolet926/phone-call-tracker",
+    "accountId": "d7ef3b02-1692-41f7-8998-8378928d4f2d"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="37cL6FanvlCS8mKByDU7JmiNN3Z" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build phone-call-tracker.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.DataGeneratorApplication.executor": "Run",
+    "Spring Boot.TrackerApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/gleb/Documents/phone-call-tracker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.DataGeneratorApplication">
+    <configuration name="DataGeneratorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="phone-call-tracker.data-generator.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.datagenerator.DataGeneratorApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrackerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="phone-call-tracker.tracker.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.tracker.TrackerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-IU-253.28294.334" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6bdcd735-4a47-4f4d-ad2c-ec6ea1f738a5" name="Changes" comment="" />
+      <created>1767197235275</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1767197235275</updated>
+      <workItem from="1767197236534" duration="1487000" />
+    </task>
+    <task id="LOCAL-00001" summary="Базовый проект с несколькими модулями для простого разделения функционала основного приложения от генератора данных, а так же вынесения общих для этих двух сервисов классов в отдельный модуль. Настроены приложения генератора и самого трекера так что бы панель управления генератором открывалась на порту 8081, а основного приложения на 8080. Добавлена базовая функциональность hello world для демонстрации работы модулей.">
+      <option name="closed" value="true" />
+      <created>1767198114769</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1767198114769</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Базовый проект с несколькими модулями для простого разделения функционала основного приложения от генератора данных, а так же вынесения общих для этих двух сервисов классов в отдельный модуль. Настроены приложения генератора и самого трекера так что бы панель управления генератором открывалась на порту 8081, а основного приложения на 8080. Добавлена базовая функциональность hello world для демонстрации работы модулей." />
+    <option name="LAST_COMMIT_MESSAGE" value="Базовый проект с несколькими модулями для простого разделения функционала основного приложения от генератора данных, а так же вынесения общих для этих двух сервисов классов в отдельный модуль. Настроены приложения генератора и самого трекера так что бы панель управления генератором открывалась на порту 8081, а основного приложения на 8080. Добавлена базовая функциональность hello world для демонстрации работы модулей." />
+  </component>
+</project>

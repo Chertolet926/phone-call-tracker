@@ -59,13 +59,13 @@ public class PostgresNotificationListener implements ApplicationListener<Context
 
     // Проверка имени канала
     private static final Pattern CHANNEL_NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9_]+$");
+    private PostgresListenerProperties postgresListenerProperties;
 
     /**
      * Инициализация listener'a:
      * <ul>
      *     <li>Создает отдельный поток для слушателя.</li>
      *     <li>Настраивает пул потоков для подписчиков.</li>
-     *     <li>Сканирует и регистрирует обработчики событий.</li>
      *     <li>Запускает listener.</li>
      * </ul>
      */
@@ -88,34 +88,6 @@ public class PostgresNotificationListener implements ApplicationListener<Context
         running.set(true);
         startListener(0); // Запускаем listener
         log.info("PostgresNotificationListener initialized");
-    }
-
-    /**
-     * Сканирует все бины в контексте приложения и регистрирует методы с аннотацией @PostgresEventHandler.
-     */
-    private void registerEventHandlers() {
-        var beans = applicationContext.getBeansOfType(Object.class).values();
-        log.info("Scanning {} beans for event handlers", beans.size());
-        eventHandlers = beans.stream()
-                .flatMap(bean -> {
-                    Class<?> targetClass = AopUtils.getTargetClass(bean);
-                    Method[] methods = targetClass.getMethods();
-                    return java.util.Arrays.stream(methods)
-                            .filter(method -> method.isAnnotationPresent(PostgresEventHandler.class))
-                            .peek(method -> log.info("Found event handler: {} in bean {}", method.getName(), bean.getClass().getSimpleName()))
-                            .map(method -> Map.entry(bean, method));
-                })
-                .collect(Collectors.toList());
-        log.info("Total event handlers registered: {}", eventHandlers.size());
-    }
-
-    /**
-     * Регистрирует обработчики событий после полной инициализации контекста приложения.
-     */
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        registerEventHandlers();
-        log.info("Registered {} event handlers", eventHandlers.size());
     }
 
     /**
@@ -200,13 +172,12 @@ public class PostgresNotificationListener implements ApplicationListener<Context
     }
 
     /**
-     * Отправляет уведомление всем зарегистрированным обработчикам.
+     * Отправляет уведомление всем подписчикам.
      *
      * @param payload содержимое уведомления
      */
     private void dispatchNotification(String payload) {
-        //log.info("Received payload: {}", payload); // Логируем полученный payload
-
+        // Для каждого подписавшегося запускаем задачу в пуле потоков
         // Для каждого зарегистрированного обработчика запускаем задачу в пуле потоков
         for (Map.Entry<Object, Method> handler : eventHandlers) {
             subscriberExecutor.execute(() -> {
@@ -219,6 +190,33 @@ public class PostgresNotificationListener implements ApplicationListener<Context
         }
     }
 
+    /**
+     * Сканирует все бины в контексте приложения и регистрирует методы с аннотацией @PostgresEventHandler.
+     */
+    private void registerEventHandlers() {
+        var beans = applicationContext.getBeansOfType(Object.class).values();
+        log.info("Scanning {} beans for event handlers", beans.size());
+        eventHandlers = beans.stream()
+                .flatMap(bean -> {
+                    Class<?> targetClass = AopUtils.getTargetClass(bean);
+                    Method[] methods = targetClass.getMethods();
+                    return java.util.Arrays.stream(methods)
+                            .filter(method -> method.isAnnotationPresent(PostgresEventHandler.class))
+                            .peek(method -> log.info("Found event handler: {} in bean {}", method.getName(), bean.getClass().getSimpleName()))
+                            .map(method -> Map.entry(bean, method));
+                })
+                .collect(Collectors.toList());
+        log.info("Total event handlers registered: {}", eventHandlers.size());
+    }
+
+    /**
+     * Регистрирует обработчики событий после полной инициализации контекста приложения.
+     */
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        registerEventHandlers();
+        log.info("Registered {} event handlers", eventHandlers.size());
+    }
 
     // Делаем задержку и перезапускаем listener
     private void restartListener() {

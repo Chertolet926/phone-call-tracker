@@ -5,21 +5,25 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.PGConnection;
 import org.postgresql.PGNotification;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.stream.Collectors;
 
 /**
  * {@code PostgresNotificationListener} - Компонент для обрабоки события PostgreSQL LISTEN/NOTIFY канала.
@@ -37,9 +41,10 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class PostgresNotificationListener {
+public class PostgresNotificationListener implements ApplicationListener<ContextRefreshedEvent> {
     private final DataSource dataSource; // Источник данных
     private final PostgresListenerProperties properties; // Конфигурация
+    private final ApplicationContext applicationContext; // Контекст приложения для сканирования бинов
 
     private volatile Connection connection; // JDBC соединение
     private final AtomicBoolean running = new AtomicBoolean(false); // Флаг работы listener'a
@@ -49,18 +54,18 @@ public class PostgresNotificationListener {
     private ScheduledExecutorService listenerExecutor; // Планировщик для запуска listener'а
     private ThreadPoolExecutor subscriberExecutor; // Пул потоков для обработки уведомлений подписчиками
 
-    // Список подписчиков
-    private final CopyOnWriteArrayList<PostgresEventSubscriber> subscribers = new CopyOnWriteArrayList<>();
+    // Список аннотированных методов
+    private List<Map.Entry<Object, Method>> eventHandlers;
 
     // Проверка имени канала
     private static final Pattern CHANNEL_NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9_]+$");
-    private PostgresListenerProperties postgresListenerProperties;
 
     /**
      * Инициализация listener'a:
      * <ul>
      *     <li>Создает отдельный поток для слушателя.</li>
      *     <li>Настраивает пул потоков для подписчиков.</li>
+     *     <li>Сканирует и регистрирует обработчики событий.</li>
      *     <li>Запускает listener.</li>
      * </ul>
      */
@@ -83,6 +88,34 @@ public class PostgresNotificationListener {
         running.set(true);
         startListener(0); // Запускаем listener
         log.info("PostgresNotificationListener initialized");
+    }
+
+    /**
+     * Сканирует все бины в контексте приложения и регистрирует методы с аннотацией @PostgresEventHandler.
+     */
+    private void registerEventHandlers() {
+        var beans = applicationContext.getBeansOfType(Object.class).values();
+        log.info("Scanning {} beans for event handlers", beans.size());
+        eventHandlers = beans.stream()
+                .flatMap(bean -> {
+                    Class<?> targetClass = AopUtils.getTargetClass(bean);
+                    Method[] methods = targetClass.getMethods();
+                    return java.util.Arrays.stream(methods)
+                            .filter(method -> method.isAnnotationPresent(PostgresEventHandler.class))
+                            .peek(method -> log.info("Found event handler: {} in bean {}", method.getName(), bean.getClass().getSimpleName()))
+                            .map(method -> Map.entry(bean, method));
+                })
+                .collect(Collectors.toList());
+        log.info("Total event handlers registered: {}", eventHandlers.size());
+    }
+
+    /**
+     * Регистрирует обработчики событий после полной инициализации контекста приложения.
+     */
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        registerEventHandlers();
+        log.info("Registered {} event handlers", eventHandlers.size());
     }
 
     /**
@@ -167,44 +200,25 @@ public class PostgresNotificationListener {
     }
 
     /**
-     * Отправляет уведомление всем подписчикам.
+     * Отправляет уведомление всем зарегистрированным обработчикам.
      *
      * @param payload содержимое уведомления
      */
     private void dispatchNotification(String payload) {
-        log.info("Received payload: {}", payload); // Логирум полученый payload
+        //log.info("Received payload: {}", payload); // Логируем полученный payload
 
-        // Для каждого подписавшегося запускаем задачу в пуле потоков
-        for (PostgresEventSubscriber subscriber : subscribers) {
+        // Для каждого зарегистрированного обработчика запускаем задачу в пуле потоков
+        for (Map.Entry<Object, Method> handler : eventHandlers) {
             subscriberExecutor.execute(() -> {
                 try {
-                    subscriber.onNotification(payload);
+                    handler.getValue().invoke(handler.getKey(), payload);
                 } catch (Exception e) {
-                    log.error("Error notifying subscriber: {}", e.getMessage(), e);
+                    log.error("Error invoking event handler {}: {}", handler.getValue().getName(), e.getMessage(), e);
                 }
             });
         }
     }
 
-    /**
-     * Добавляет подписчика.
-     *
-     * @param subscriber подписчик
-     */
-    public void subscribe(PostgresEventSubscriber subscriber) {
-        subscribers.add(subscriber);
-        log.info("Subscriber {} added", subscriber.getClass());
-    }
-
-    /**
-     * Удаляет подписчика.
-     *
-     * @param subscriber подписчик
-     */
-    public void unsubscribe(PostgresEventSubscriber subscriber) {
-        subscribers.remove(subscriber);
-        log.info("Subscriber {} removed", subscriber.getClass());
-    }
 
     // Делаем задержку и перезапускаем listener
     private void restartListener() {

@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class LoggingSubscriber implements PostgresEventSubscriber {
-    @Override
-    public void onNotification(String payload) {
-        log.debug(">>> Received notification payload: {}", payload);
+public class LoggingSubscriber {
+
+    @PostgresEventHandler
+    public void handleNotification(String payload) {
+        log.info(">>> Received notification payload: {}", payload);
     }
 }

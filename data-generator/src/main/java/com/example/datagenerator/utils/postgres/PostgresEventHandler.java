@@ -1,4 +1,4 @@
-package com.example.datagenerator.listener;
+package com.example.datagenerator.utils.postgres;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

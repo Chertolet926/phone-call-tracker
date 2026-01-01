@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bdcd735-4a47-4f4d-ad2c-ec6ea1f738a5" name="Changes" comment="Добавлен класс реализующий listener изменений бд. Позже он пригодится для создания новых связей только что зарегестрированого пользователя с уже существующими для проверки.">
-      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/PostgresEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/PostgresEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/utils/postgres/PostgresNotificationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0.0/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0.0/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/build/resources/main/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/build/resources/main/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/DataGeneratorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/DataGeneratorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/config/PostgresListenerProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/config/PostgresListenerProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/LoggingSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/LoggingSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/PostgresEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/utils/postgres/PostgresEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/java/com/example/datagenerator/listener/PostgresNotificationListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-generator/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/data-generator/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,5 +1,6 @@
 package com.example.datagenerator.listener;
 
+import com.example.datagenerator.utils.postgres.PostgresEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
